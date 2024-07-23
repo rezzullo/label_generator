@@ -2,7 +2,7 @@
   "name": "labelgenerator",
   "displayName": "LabelGenerator",
   "description": "",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "rezzullo",
   "engines": {
     "vscode": "^1.91.0"
@@ -55,9 +55,9 @@
     "xml2js": "^0.6.2"
   },
   "files": [
-        "src/webview.html",
-        "src/styles.css",
-        "src/extension.ts",
-        "out"
-    ]
+    "src/webview.html",
+    "src/styles.css",
+    "src/extension.ts",
+    "out"
+  ]
 }
