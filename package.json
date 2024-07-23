@@ -2,14 +2,20 @@
   "name": "labelgenerator",
   "displayName": "LabelGenerator",
   "description": "",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "publisher": "rezzullo",
   "engines": {
     "vscode": "^1.91.0"
+  },
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/rezzullo/labelgenerator.git"
   },
   "categories": [
     "Other"
   ],
-  "icon": "images/icon.png",
+  
+  "icon": "src/images/icon.png",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
