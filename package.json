@@ -56,7 +56,6 @@
   },
   "files": [
     "src/webview.html",
-    "src/styles.css",
     "src/extension.ts",
     "out"
   ]

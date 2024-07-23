@@ -276,7 +276,7 @@ async function applyJsonLabel(filePath: string, labelName: string, labelValue: s
 }
 
 async function applyXmlLabel(filePath: string, labelName: string, labelValue: string) {
-	let fileContent = fs.readFileSync(filePath, 'utf8').trim();
+    let fileContent = fs.readFileSync(filePath, 'utf8').trim();
 
     if (fileContent === '') {
         fileContent = '<root></root>';
@@ -327,13 +327,13 @@ async function applyXmlLabel(filePath: string, labelName: string, labelValue: st
 
 function getWebviewContent(context: vscode.ExtensionContext, panel: vscode.WebviewPanel, htmlFileName: string): string {
     const htmlPath = vscode.Uri.joinPath(context.extensionUri, 'src', htmlFileName);
+    
+    if (!fs.existsSync(htmlPath.fsPath)) {
+        vscode.window.showErrorMessage(`File non trovato: ${htmlPath.fsPath}`);
+        return '';
+    }
+
     let html = fs.readFileSync(htmlPath.fsPath, 'utf8');
-
-    const cssPath = vscode.Uri.joinPath(context.extensionUri, 'src', 'styles.css');
-    const cssUri = panel.webview.asWebviewUri(cssPath);
-
-    html = html.replace('href="styles.css"', `href="${cssUri}"`);
-
     return html;
 }
 
