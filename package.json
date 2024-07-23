@@ -53,5 +53,11 @@
   },
   "dependencies": {
     "xml2js": "^0.6.2"
-  }
+  },
+  "files": [
+        "src/webview.html",
+        "src/styles.css",
+        "src/extension.ts",
+        "out"
+    ]
 }
