@@ -51,6 +51,12 @@ In aggiunta è possibile inserire un file di tipo exe che verrà eseguito nel te
 - La versione attuale supporta solo la creazione di label solo per file json e xml
 - La versione attuale permette il salvataggio dei file caricati anche dopo aver chiuso l'estensione, vengono memorizzati nel pannello gli utlimi file caricati. 
 
+
+## Licenza
+
+MIT Licence
+
+
 # Versione 
 
 1.0.0
