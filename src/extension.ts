@@ -326,10 +326,10 @@ async function applyXmlLabel(filePath: string, labelName: string, labelValue: st
 }
 
 function getWebviewContent(context: vscode.ExtensionContext, panel: vscode.WebviewPanel, htmlFileName: string): string {
-    const htmlPath = path.join(context.extensionPath, 'src', htmlFileName);
-    let html = fs.readFileSync(htmlPath, 'utf8');
+    const htmlPath = vscode.Uri.joinPath(context.extensionUri, 'src', htmlFileName);
+    let html = fs.readFileSync(htmlPath.fsPath, 'utf8');
 
-    const cssPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'styles.css'));
+    const cssPath = vscode.Uri.joinPath(context.extensionUri, 'src', 'styles.css');
     const cssUri = panel.webview.asWebviewUri(cssPath);
 
     html = html.replace('href="styles.css"', `href="${cssUri}"`);

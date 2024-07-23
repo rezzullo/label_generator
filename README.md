@@ -54,9 +54,9 @@ In aggiunta è possibile inserire un file di tipo exe che verrà eseguito nel te
 
 ## Licenza
 
-MIT Licence
+Questo progetto è distribuito sotto la [MIT License](./LICENSE)
 
 
 # Versione 
 
-1.0.0
+1.0.1 Correzione di alcuni bug
