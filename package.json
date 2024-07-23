@@ -24,6 +24,23 @@
         "title": "Generate label"
       }
     ],
+    "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "labelGeneratorView",
+                    "title": "Label Generator",
+                    "icon": "images/la creazione di adamo versione 2.png" 
+                }
+            ]
+        },
+        "views": {
+            "labelGeneratorView": [
+                {
+                    "id": "labelGeneratorView",
+                    "name": "Label Generator"
+                }
+            ]
+        },
     "keybindings": [
       {
         "command": "LabelGenerator",
