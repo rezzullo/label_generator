@@ -55,7 +55,7 @@
     "xml2js": "^0.6.2"
   },
   "files": [
-    "src/webview.html",
+    "out/webview.html",
     "src/extension.ts",
     "out"
   ]

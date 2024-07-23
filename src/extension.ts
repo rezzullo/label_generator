@@ -8,6 +8,8 @@ let selectedScript: vscode.Uri | null = null;
 let terminal: vscode.Terminal | null = null;
 let existingLabelNames: string[] = [];
 
+const webviewHtmlContent = ``
+
 export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "labelgenerator" is now active!');
 
@@ -24,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.ViewColumn.One,
             {
                 enableScripts: true,
-                localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
+                localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'out'))]
             }
         );
 
@@ -326,7 +328,7 @@ async function applyXmlLabel(filePath: string, labelName: string, labelValue: st
 }
 
 function getWebviewContent(context: vscode.ExtensionContext, panel: vscode.WebviewPanel, htmlFileName: string): string {
-    const htmlPath = vscode.Uri.joinPath(context.extensionUri, 'src', htmlFileName);
+    const htmlPath = vscode.Uri.joinPath(context.extensionUri, 'out', htmlFileName);
     
     if (!fs.existsSync(htmlPath.fsPath)) {
         vscode.window.showErrorMessage(`File non trovato: ${htmlPath.fsPath}`);
