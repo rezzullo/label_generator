@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LABEL GENERATOR</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #3a87f3;
+            transition: background-color 0.5s;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            margin: 0;
+            font-size: 2.5rem;
+            color: #343740;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-45%);
+        }
+
+        #label-input-container {
+            margin-top: 80px; /* Spazio sotto il titolo */
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            right: 100%;
+            top: 100px;
+            left: 50%;
+            transform: translateX(8%);
+        }
+
+        #select-files-button {
+            margin-right: 10px; /* Aggiunge spazio tra il pulsante e l'input */
+            background-color: #707c7e;
+            border-color: #ffffff;
+        }
+
+        #select-script-button {
+            background-color: #45eeec;
+            border-color: #ffffff;
+        }
+
+        #label-input {
+            width: 300px;
+            padding: 10px;
+            font-size: 1rem;
+            color: #343a40; /* Colore del testo */
+            background-color: #ffffff; /* Colore di sfondo */
+            height: auto; /* Assicurati che l'altezza sia automatica */
+        }
+
+        #selected-label {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #343a40;
+        }
+
+        #file-list-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #file-list, #label-values-container {
+            display: flex;
+            flex-direction: column;
+            width: 200px; /* Riduce la larghezza della lista dei file */
+        }
+
+        #file-list li, #label-values-container input {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 10px; /* Stessa distanza verticale tra gli elementi */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem; /* Stessa dimensione del testo degli input */
+            display: flex;
+            align-items: center;
+            height: 40px; /* Altezza fissa per allineamento */
+        }
+
+        #buttons-container {
+            margin-left: 20px;
+        }
+
+        #apply-labels-button {
+            margin-top: 20px;
+            align-self: center;
+            background-color: #45eeec;
+            border-color: #ffffff;
+        }
+
+        .dropdown {
+            background-color: #45eeec;
+            border-color: #ffffff;
+            position: relative;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 100%; /* Larghezza minima uguale al pulsante */
+            max-height: 200px; /* Altezza massima del menu a tendina */
+            overflow-y: auto; /* Abilita lo scorrimento verticale */
+            box-shadow: 0px 8px 16px 0px #45eeec;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #45eeec;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #45eeec;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #45eeec;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">Label Generator</h1>
+    <div id="label-input-container">
+        <button id="select-files-button" class="btn btn-primary ml-2">Select Files</button>
+        <input type="text" id="label-input" placeholder="Label name">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropbtn">Suggest Label Names</button>
+            <div id="dropdown-content" class="dropdown-content">
+                <!-- I nomi delle etichette verranno aggiunti qui dinamicamente -->
+            </div>
+        </div>
+    </div>
+    <div id="file-list-container">
+        <ul id="file-list"></ul>
+        <div id="label-values-container"></div>
+    </div>
+    
+    <button id="select-script-button" class="btn btn-secondary ml-2">Select Script</button>
+    <button id="apply-labels-button" class="btn btn-success ml-2 mt-3">Apply Labels</button>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const vscode = acquireVsCodeApi();
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const title = document.getElementById('title');
+            const selectedLabel = document.getElementById('selected-label');
+            const labelInput = document.getElementById('label-input');
+            const selectFilesButton = document.getElementById('select-files-button');
+            const fileList = document.getElementById('file-list');
+            const labelValuesContainer = document.getElementById('label-values-container');
+            const applyLabelsButton = document.getElementById('apply-labels-button');
+            const body = document.body;
+            const selectScriptButton = document.getElementById('select-script-button');
+            const dropdownContent = document.getElementById('dropdown-content');
+
+            selectScriptButton.addEventListener('click', () => {
+                vscode.postMessage({ command: 'selectScript' });
+            });
+
+            labelInput.addEventListener('input', (event) => {
+                selectedLabel.textContent = event.target.value;
+            });
+
+            selectFilesButton.addEventListener('click', () => {
+                vscode.postMessage({ command: 'selectFiles' });
+            });
+
+            applyLabelsButton.addEventListener('click', () => {
+                const labelName = document.getElementById('label-input').value;
+                const labelValues = Array.from(document.querySelectorAll('#label-values-container input'))
+                    .map(input => input.value);
+
+                vscode.postMessage({
+                    command: 'applyLabels',
+                    labelName: labelName,
+                    labelValues: labelValues
+                });
+            });
+
+            window.addEventListener('message', event => {
+                const message = event.data;
+                switch (message.command) {
+                    case 'updateFiles':
+                        fileList.innerHTML = '';
+                        labelValuesContainer.innerHTML = ''; // Pulisce il contenitore dei valori delle etichette
+                        message.files.forEach(file => {
+                            const li = document.createElement('li');
+                            li.textContent = file; // Usa il nome del file direttamente
+                            fileList.appendChild(li);
+
+                            // Crea un nuovo input per ogni file selezionato
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.className = 'form-control';
+                            input.placeholder = `Value for ${file}`;
+                            labelValuesContainer.appendChild(input);
+                        });
+                        break;
+                    case 'updateLabelNames':
+                        dropdownContent.innerHTML = '';
+                        message.labelNames.forEach(name => {
+                            const a = document.createElement('a');
+                            a.textContent = name;
+                            a.addEventListener('click', () => {
+                                labelInput.value = name;
+                            });
+                            dropdownContent.appendChild(a);
+                        });
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
