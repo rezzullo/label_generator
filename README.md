@@ -61,10 +61,12 @@ Questo progetto è distribuito sotto la [MIT License](./LICENSE)
 
 1.0.0 Versione iniziale
 
-1.0.1 Correzione di alcuni bug
+1.0.1 Correzione di alcuni bug segnalati
 
-1.0.2 Correzione di alcuni bug
+1.0.2 Correzione di alcuni bug segnalati
 
 1.0.3 Correzione di alcuni bug e aggiunta di un'immagine
 
-1.0.4 Correzione di alcuni bug
+1.0.4 Correzione di alcuni bug segnalati
+
+1.0.5 Correzione di alcuni bug segnalati
